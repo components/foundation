@@ -25,9 +25,9 @@
     "extra": {
         "component": {
             "scripts": [
+                "js/foundation/foundation.js ",
                 "js/foundation/foundation.alerts.js",
                 "js/foundation/foundation.dropdown.js",
-                "js/foundation/foundation.js ",
                 "js/foundation/foundation.placeholder.js",
                 "js/foundation/foundation.tooltips.js",
                 "js/foundation/foundation.clearing.js",
@@ -46,7 +46,10 @@
             "files": [
                 "js/foundation.min.js",
                 "css/foundation.min.css"
-            ]
+            ],
+            "shim": {
+                "exports": "window.Foundation"
+            }
         }
     }
 }
