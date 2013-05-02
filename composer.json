@@ -16,8 +16,7 @@
     "require": {
         "components/modernizr": "*",
         "components/jquery": "*",
-        "components/normalize.css": "*",
-        "robloach/component-installer": "*"
+        "components/normalize.css": "*"
     },
     "suggest": {
         "components/zepto": "A much lighter substitute for jQuery."
