@@ -8,6 +8,7 @@
     "components/jquery": "*",
     "components/normalize.css": "*"
   },
+  "main": "js/foundation.min.js",
   "scripts": [
     "js/foundation.min.js"
   ],
