@@ -10,4 +10,6 @@ of the features to work correctly.
 Package Managers
 ----------------
 
+* [Bower](http://bower.io): `components-foundation`
+* [Component](http://github.com/component/component): `components/foundation`
 * [Composer](http://packagist.org/packages/components/foundation): `components/foundation`

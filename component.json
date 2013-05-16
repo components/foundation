@@ -5,7 +5,7 @@
   "version": "4.1.2",
   "dependencies": {
     "components/modernizr": "*",
-    "components/jquery": "*",
+    "component/jquery": "*",
     "components/normalize.css": "*"
   },
   "main": "js/foundation.min.js",

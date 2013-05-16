@@ -15,11 +15,11 @@
     ],
     "require": {
         "components/modernizr": "*",
-        "components/jquery": "*",
         "components/normalize.css": "*"
     },
     "suggest": {
-        "components/zepto": "A much lighter substitute for jQuery."
+        "components/jquery": "Foundation has support for either jQuery or Zepto, so use either one",
+        "components/zepto": "Foundation has support for either jQuery or Zepto, so use either one"
     },
     "extra": {
         "component": {
@@ -31,7 +31,7 @@
             ],
             "files": [
                 "js/**",
-                "css/*"
+                "css/**"
             ],
             "shim": {
                 "exports": "window.Foundation",
