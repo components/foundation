@@ -1,20 +1,20 @@
-/*jslint unparam: true, browser: true, indent: 2 */
-
 ;(function ($, window, document, undefined) {
   'use strict';
 
-  Foundation.libs.tooltips = {
-    name: 'tooltips',
+  Foundation.libs.tooltip = {
+    name : 'tooltip',
 
-    version : '4.1.0',
+    version : '5.0.0',
 
     settings : {
-      selector : '.has-tip',
-      additionalInheritableClasses : [],
-      tooltipClass : '.tooltip',
-      tipTemplate : function (selector, content) {
+      additional_inheritable_classes : [],
+      tooltip_class : '.tooltip',
+      append_to: 'body',
+      touch_close_text: 'Tap To Close',
+      disable_for_touch: false,
+      tip_template : function (selector, content) {
         return '<span data-selector="' + selector + '" class="' 
-          + Foundation.libs.tooltips.settings.tooltipClass.substring(1) 
+          + Foundation.libs.tooltip.settings.tooltip_class.substring(1) 
           + '">' + content + '<span class="nub"></span></span>';
       }
     },
@@ -22,46 +22,43 @@
     cache : {},
 
     init : function (scope, method, options) {
+      this.bindings(method, options);
+    },
+
+    events : function () {
       var self = this;
-      this.scope = scope || this.scope;
 
-      if (typeof method === 'object') {
-        $.extend(true, this.settings, method);
-      }
-
-      if (typeof method != 'string') {
-        if (Modernizr.touch) {
-          $(this.scope)
-            .on('click.fndtn.tooltip touchstart.fndtn.tooltip touchend.fndtn.tooltip', 
-              '[data-tooltip]', function (e) {
+      if (Modernizr.touch) {
+        $(this.scope)
+          .off('.tooltip')
+          .on('click.fndtn.tooltip touchstart.fndtn.tooltip touchend.fndtn.tooltip', 
+            '[data-tooltip]', function (e) {
+            var settings = $.extend({}, self.settings, self.data_options($(this)));
+            if (!settings.disable_for_touch) {
               e.preventDefault();
-              $(self.settings.tooltipClass).hide();
+              $(settings.tooltip_class).hide();
               self.showOrCreateTip($(this));
-            })
-            .on('click.fndtn.tooltip touchstart.fndtn.tooltip touchend.fndtn.tooltip', 
-              this.settings.tooltipClass, function (e) {
-              e.preventDefault();
-              $(this).fadeOut(150);
-            });
-        } else {
-          $(this.scope)
-            .on('mouseenter.fndtn.tooltip mouseleave.fndtn.tooltip', 
-              '[data-tooltip]', function (e) {
-              var $this = $(this);
-
-              if (e.type === 'mouseover' || e.type === 'mouseenter') {
-                self.showOrCreateTip($this);
-              } else if (e.type === 'mouseout' || e.type === 'mouseleave') {
-                self.hide($this);
-              }
-            });
-        }
-
-        // $(this.scope).data('fndtn-tooltips', true);
+            }
+          })
+          .on('click.fndtn.tooltip touchstart.fndtn.tooltip touchend.fndtn.tooltip', 
+            this.settings.tooltip_class, function (e) {
+            e.preventDefault();
+            $(this).fadeOut(150);
+          });
       } else {
-        return this[method].call(this, options);
-      }
+        $(this.scope)
+          .off('.tooltip')
+          .on('mouseenter.fndtn.tooltip mouseleave.fndtn.tooltip', 
+            '[data-tooltip]', function (e) {
+            var $this = $(this);
 
+            if (/enter|over/i.test(e.type)) {
+              self.showOrCreateTip($this);
+            } else if (e.type === 'mouseout' || e.type === 'mouseleave') {
+              self.hide($this);
+            }
+          });
+      }
     },
 
     showOrCreateTip : function ($target) {
@@ -79,7 +76,7 @@
           tip = null;
 
       if (selector) {
-        tip = $('span[data-selector=' + selector + ']' + this.settings.tooltipClass);
+        tip = $('span[data-selector="' + selector + '"]' + this.settings.tooltip_class);
       }
 
       return (typeof tip === 'object') ? tip : false;
@@ -98,12 +95,12 @@
     },
 
     create : function ($target) {
-      var $tip = $(this.settings.tipTemplate(this.selector($target), $('<div>').html($target.attr('title')).html())),
+      var $tip = $(this.settings.tip_template(this.selector($target), $('<div></div>').html($target.attr('title')).html())),
           classes = this.inheritable_classes($target);
 
-      $tip.addClass(classes).appendTo('body');
+      $tip.addClass(classes).appendTo(this.settings.append_to);
       if (Modernizr.touch) {
-        $tip.append('<span class="tap-to-close">tap to close </span>');
+        $tip.append('<span class="tap-to-close">'+this.settings.touch_close_text+'</span>');
       }
       $target.removeAttr('title').attr('title','');
       this.show($target);
@@ -116,8 +113,8 @@
 
       width = target.data('width');
       nub = tip.children('.nub');
-      nubHeight = this.outerHeight(nub);
-      nubWidth = this.outerHeight(nub);
+      nubHeight = nub.outerHeight();
+      nubWidth = nub.outerHeight();
 
       objPos = function (obj, top, right, bottom, left, width) {
         return obj.css({
@@ -129,27 +126,27 @@
         }).end();
       };
 
-      objPos(tip, (target.offset().top + this.outerHeight(target) + 10), 'auto', 'auto', target.offset().left, width);
+      objPos(tip, (target.offset().top + target.outerHeight() + 10), 'auto', 'auto', target.offset().left, width);
 
-      if ($(window).width() < 767) {
-        objPos(tip, (target.offset().top + this.outerHeight(target) + 10), 'auto', 'auto', 12.5, $(this.scope).width());
+      if (this.small()) {
+        objPos(tip, (target.offset().top + target.outerHeight() + 10), 'auto', 'auto', 12.5, $(this.scope).width());
         tip.addClass('tip-override');
         objPos(nub, -nubHeight, 'auto', 'auto', target.offset().left);
       } else {
         var left = target.offset().left;
         if (Foundation.rtl) {
-          left = target.offset().left + target.offset().width - this.outerWidth(tip);
+          left = target.offset().left + target.offset().width - tip.outerWidth();
         }
-        objPos(tip, (target.offset().top + this.outerHeight(target) + 10), 'auto', 'auto', left, width);
+        objPos(tip, (target.offset().top + target.outerHeight() + 10), 'auto', 'auto', left, width);
         tip.removeClass('tip-override');
         if (classes && classes.indexOf('tip-top') > -1) {
-          objPos(tip, (target.offset().top - this.outerHeight(tip)), 'auto', 'auto', left, width)
+          objPos(tip, (target.offset().top - tip.outerHeight()), 'auto', 'auto', left, width)
             .removeClass('tip-override');
         } else if (classes && classes.indexOf('tip-left') > -1) {
-          objPos(tip, (target.offset().top + (this.outerHeight(target) / 2) - nubHeight*2.5), 'auto', 'auto', (target.offset().left - this.outerWidth(tip) - nubHeight), width)
+          objPos(tip, (target.offset().top + (target.outerHeight() / 2) - nubHeight*2.5), 'auto', 'auto', (target.offset().left - tip.outerWidth() - nubHeight), width)
             .removeClass('tip-override');
         } else if (classes && classes.indexOf('tip-right') > -1) {
-          objPos(tip, (target.offset().top + (this.outerHeight(target) / 2) - nubHeight*2.5), 'auto', 'auto', (target.offset().left + this.outerWidth(target) + nubHeight), width)
+          objPos(tip, (target.offset().top + (target.outerHeight() / 2) - nubHeight*2.5), 'auto', 'auto', (target.offset().left + target.outerWidth() + nubHeight), width)
             .removeClass('tip-override');
         }
       }
@@ -157,8 +154,12 @@
       tip.css('visibility', 'visible').hide();
     },
 
+    small : function () {
+      return matchMedia(Foundation.media_queries.small).matches;
+    },
+
     inheritable_classes : function (target) {
-      var inheritables = ['tip-top', 'tip-left', 'tip-bottom', 'tip-right', 'noradius'].concat(this.settings.additionalInheritableClasses),
+      var inheritables = ['tip-top', 'tip-left', 'tip-bottom', 'tip-right', 'noradius'].concat(this.settings.additional_inheritable_classes),
           classes = target.attr('class'),
           filtered = classes ? $.map(classes.split(' '), function (el, i) {
             if ($.inArray(el, inheritables) !== -1) {
@@ -191,9 +192,11 @@
 
     off : function () {
       $(this.scope).off('.fndtn.tooltip');
-      $(this.settings.tooltipClass).each(function (i) {
+      $(this.settings.tooltip_class).each(function (i) {
         $('[data-tooltip]').get(i).attr('title', $(this).text());
       }).remove();
-    }
+    },
+
+    reflow : function () {}
   };
-}(Foundation.zj, this, this.document));
+}(jQuery, this, this.document));
