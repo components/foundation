@@ -8,6 +8,7 @@
   ],
   "dependencies": {
     "jquery": ">= 2.0.0",
-    "modernizr": ">= 2.6.2"
+    "modernizr": ">= 2.6.2",
+    "normalize-css": "2.1.2"
   }
 }
