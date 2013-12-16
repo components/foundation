@@ -31,7 +31,8 @@
             ],
             "files": [
                 "js/**",
-                "css/**"
+                "css/**",
+                "scss/**"
             ],
             "shim": {
                 "exports": "window.Foundation",
