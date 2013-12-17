@@ -16,6 +16,7 @@
     "css/foundation.css"
   ],
   "scss": [
+    "scss/normalize.scss",
     "scss/foundation.scss",
     "scss/foundation/_functions.scss",
     "scss/foundation/_settings.scss",
