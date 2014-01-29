@@ -13,9 +13,7 @@
     "js/foundation.min.js"
   ],
   "styles": [
-    "css/foundation.css"
-  ],
-  "files": [
+    "css/foundation.css",
     "scss/normalize.scss",
     "scss/foundation.scss",
     "scss/foundation/_functions.scss",
