@@ -1,0 +1,13 @@
+{
+  "name": "components-foundation",
+  "description": "The most advanced responsive front-end framework in the world.",
+  "version": "3.2.5",
+  "main": [
+    "javascripts/foundation.min.js",
+    "stylesheets/foundation.min.css"
+  ],
+  "dependencies": {
+    "jquery": ">= 1.9.0",
+    "modernizr": ">= 2.6.2"
+  }
+}
