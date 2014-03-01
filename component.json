@@ -1,8 +1,7 @@
 {
   "name": "foundation",
   "repo": "components/foundation",
-  "description": "The most advanced responsive front-end framework in the world.",
-  "version": "5.0.2",
+  "version": "5.0.3",
   "dependencies": {
     "components/modernizr": "*",
     "component/jquery": "*",
