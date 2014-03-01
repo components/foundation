@@ -7,6 +7,11 @@ This package provides the basic Foundation CSS and Javascript. It also includes
 all the optional Javascript. You may need to include the libraries for some
 of the features to work correctly.
 
+Source
+------
+
+This repository is a packaging of [https://github.com/zurb/bower-foundation/](https://github.com/zurb/bower-foundation/)
+
 Package Managers
 ----------------
 
