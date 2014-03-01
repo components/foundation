@@ -1,7 +1,7 @@
 {
   "name": "foundation",
   "repo": "components/foundation",
-  "version": "5.0.3",
+  "version": "5.1.0",
   "dependencies": {
     "components/modernizr": "*",
     "component/jquery": "*",
@@ -43,6 +43,7 @@
     "scss/foundation/components/_panels.scss",
     "scss/foundation/components/_pricing-tables.scss",
     "scss/foundation/components/_progress-bars.scss",
+    "scss/foundation/components/_range-slider.scss",
     "scss/foundation/components/_reveal.scss",
     "scss/foundation/components/_side-nav.scss",
     "scss/foundation/components/_split-buttons.scss",
