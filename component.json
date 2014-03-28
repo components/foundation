@@ -7,9 +7,9 @@
     "component/jquery": "*",
     "components/normalize.css": "*"
   },
-  "main": "js/foundation.min.js",
+  "main": "js/foundation.js",
   "scripts": [
-    "js/foundation.min.js"
+    "js/foundation.js"
   ],
   "styles": [
     "css/foundation.css"
