@@ -32,6 +32,8 @@
     "scss/foundation/components/_forms.scss",
     "scss/foundation/components/_global.scss",
     "scss/foundation/components/_grid.scss",
+    "scss/foundation/components/_icon-bar.scss",
+    "scss/foundation/components/_iconbar.scss",
     "scss/foundation/components/_inline-lists.scss",
     "scss/foundation/components/_joyride.scss",
     "scss/foundation/components/_keystrokes.scss",
