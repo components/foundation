@@ -278,7 +278,7 @@
   window.Foundation = {
     name : 'Foundation',
 
-    version : '5.4.3',
+    version : '5.4.4',
 
     media_queries : {
       small : S('.foundation-mq-small').css('font-family').replace(/^[\/\\'"]+|(;\s?})+|[\/\\'"]+$/g, ''),
@@ -630,7 +630,7 @@
   Foundation.libs.abide = {
     name : 'abide',
 
-    version : '5.4.3',
+    version : '5.4.4',
 
     settings : {
       live_validate : true,
@@ -944,7 +944,7 @@
   Foundation.libs.accordion = {
     name : 'accordion',
 
-    version : '5.4.3',
+    version : '5.4.4',
 
     settings : {
       active_class: 'active',
@@ -1010,7 +1010,7 @@
   Foundation.libs.alert = {
     name : 'alert',
 
-    version : '5.4.3',
+    version : '5.4.4',
 
     settings : {
       callback: function (){}
@@ -1054,7 +1054,7 @@
   Foundation.libs.clearing = {
     name : 'clearing',
 
-    version: '5.4.3',
+    version: '5.4.4',
 
     settings : {
       templates : {
@@ -1613,20 +1613,13 @@
   Foundation.libs.dropdown = {
     name : 'dropdown',
 
-    version : '5.4.3',
+    version : '5.4.4',
 
     settings : {
       active_class: 'open',
       mega_class: 'mega',
       align: 'bottom',
       is_hover: false,
-      smart_position: true,
-      smart_position_arrays: {
-        right:   ['right', 'bottom', 'top', 'left', 'right'],
-        left:    ['left', 'right', 'bottom', 'top', 'left'],
-        top:     ['top', 'right', 'bottom', 'left', 'top'],
-        bottom : ['bottom', 'top', 'right', 'left', 'bottom']
-      },
       opened: function(){},
       closed: function(){}
     },
@@ -1816,44 +1809,9 @@
 
     style : function (dropdown, target, settings) {
       var css = $.extend({position: 'absolute'},
-
-        this.position(dropdown, target, settings));
+        this.dirs[settings.align].call(dropdown, target, settings));
 
       dropdown.attr('style', '').css(css);
-    },
-    // return CSS property object
-    position: function(d, t, s) {
-      var res = {},
-        vp = {},
-        list = s.smart_position_arrays[s.align],
-        len = list.length,
-        dd_w = d.outerWidth(),
-        dd_h = d.outerHeight(),
-        o = d.offsetParent().offset();
-
-        if (s.smart_position) {
-          var $win = $(window);
-          vp.top =  $win.scrollTop();
-          vp.left = $win.scrollLeft();
-          vp.right  = vp.left + $win.width();
-          vp.bottom = vp.top + $win.height();
-
-          for (var i=0; i < len; i++) {
-            res = this.dirs[list[i]].call(d, t, s);
-            if (this.is_out(vp, res.top + o.top, res.left + o.left, dd_w, dd_h, 3) === false)
-              break;
-          }
-        }
-        else {
-          res = this.dirs[s.align].call(d, t, s);
-        }
-
-        return res;
-    },
-
-    is_out: function (vp, top, left, width, height, buffer) {
-      return (top < vp.top + buffer || left < vp.left + buffer
-           || top + height > vp.bottom - buffer || left + width > vp.right - buffer);
     },
 
     // return CSS property object
@@ -1917,7 +1875,6 @@
       }
     },
 
-
     // Insert rule to style psuedo elements
     adjust_pip : function (dropdown,target,settings,position) {
       var sheet = Foundation.stylesheet,
@@ -1979,7 +1936,7 @@
   Foundation.libs.equalizer = {
     name : 'equalizer',
 
-    version : '5.4.3',
+    version : '5.4.4',
 
     settings : {
       use_tallest: true,
@@ -2054,7 +2011,7 @@
   Foundation.libs.interchange = {
     name : 'interchange',
 
-    version : '5.4.3',
+    version : '5.4.4',
 
     cache : {},
 
@@ -2401,7 +2358,7 @@
   Foundation.libs.joyride = {
     name : 'joyride',
 
-    version : '5.4.3',
+    version : '5.4.4',
 
     defaults : {
       expose                   : false,     // turn on or off the expose feature
@@ -3315,7 +3272,7 @@
   Foundation.libs['magellan-expedition'] = {
     name : 'magellan-expedition',
 
-    version : '5.4.3',
+    version : '5.4.4',
 
     settings : {
       active_class: 'active',
@@ -3505,7 +3462,7 @@
   Foundation.libs.offcanvas = {
     name : 'offcanvas',
 
-    version : '5.4.3',
+    version : '5.4.4',
 
     settings : {
       open_method: 'move',
@@ -4056,7 +4013,7 @@
   Foundation.libs.orbit = {
     name: 'orbit',
 
-    version: '5.4.3',
+    version: '5.4.4',
 
     settings: {
       animation: 'slide',
@@ -4131,7 +4088,7 @@
   Foundation.libs.reveal = {
     name : 'reveal',
 
-    version : '5.4.3',
+    version : '5.4.4',
 
     locked : false,
 
@@ -4576,7 +4533,7 @@
   Foundation.libs.slider = {
     name : 'slider',
 
-    version : '5.4.3',
+    version : '5.4.4',
 
     settings: {
       start: 0,
@@ -4816,7 +4773,7 @@
   Foundation.libs.tab = {
     name : 'tab',
 
-    version : '5.4.3',
+    version : '5.4.4',
 
     settings : {
       active_class: 'active',
@@ -4871,14 +4828,7 @@
       S(window).on('hashchange.fndtn.tab', function (e) {
         e.preventDefault();
         self.handle_location_hash_change();
-
-      }).on('keyup', function (e) {
-        if (e.keyword == 9) {
-          // active tab
-          console.log(document.querySelector('[data-tab] .tab-title :focus'))
-        }
-      });
-      ;
+      });
     },
 
     handle_location_hash_change : function () {
@@ -5041,7 +4991,7 @@
   Foundation.libs.tooltip = {
     name : 'tooltip',
 
-    version : '5.4.3',
+    version : '5.4.4',
 
     settings : {
       additional_inheritable_classes : [],
@@ -5342,7 +5292,7 @@
   Foundation.libs.topbar = {
     name : 'topbar',
 
-    version: '5.4.3',
+    version: '5.4.4',
 
     settings : {
       index : 0,
