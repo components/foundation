@@ -1,7 +1,7 @@
 {
   "name": "foundation",
   "repo": "components/foundation",
-  "version": "5.4.6",
+  "version": "5.4.7",
   "dependencies": {
     "components/modernizr": "*",
     "components/jquery": "*",
