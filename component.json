@@ -1,7 +1,7 @@
 {
   "name": "foundation",
   "repo": "components/foundation",
-  "version": "5.5.1",
+  "version": "5.5.2",
   "dependencies": {
     "components/modernizr": "*",
     "components/jquery": "*",
@@ -53,7 +53,6 @@
     "scss/foundation/components/_tables.scss",
     "scss/foundation/components/_tabs.scss",
     "scss/foundation/components/_thumbs.scss",
-    "scss/foundation/components/_toolbar.scss",
     "scss/foundation/components/_tooltips.scss",
     "scss/foundation/components/_top-bar.scss",
     "scss/foundation/components/_type.scss",
