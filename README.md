@@ -1,6 +1,10 @@
 foundation
 ==========
 
+:bangbang: This repository is no longer maintained. Please refer to [foundation-sites](https://www.npmjs.com/package/foundation-sites) for version 6 of foundation.
+
+---
+
 Shim repository for [Foundation](https://github.com/zurb/foundation).
 
 This package provides the basic Foundation CSS and Javascript. It also includes
